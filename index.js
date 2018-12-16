@@ -4,8 +4,8 @@ const Express = require('express'),
 	{host, port} = require('./config')
 
 class LazyServer {
-	constructor(dispatch) {
-		this.dispatch = dispatch
+	constructor(mod) {
+		this.mod = mod
 		this.q = null
 		this.app = null
 		this.port = 0
@@ -35,7 +35,7 @@ class LazyServer {
 				this.q = null
 
 				// Clean up on exit
-				this.dispatch.base.connection.serverConnection.once('close', () => { this.app.close() })
+				this.mod.dispatch.connection.serverConnection.once('close', () => { this.app.close() })
 			}
 			else await this.q
 
@@ -46,21 +46,21 @@ class LazyServer {
 const servers = new WeakMap()
 
 async function getServer(router) {
-	const base = router.dispatch.base
-	if(servers.has(base)) return servers.get(base).get(router)
+	const dispatch = router.mod.dispatch
+	if(servers.has(dispatch)) return servers.get(dispatch).get(router)
 
-	const server = new LazyServer(router.dispatch)
-	servers.set(base, server)
+	const server = new LazyServer(router.mod)
+	servers.set(dispatch, server)
 	return server.get(router)
 }
 
-function UI(dispatch, options) { return UI.Router(dispatch, options) }
+function UI(mod, options) { return UI.Router(mod, options) }
 
 Object.assign(UI, Express, {
-	Router(dispatch, options) {
+	Router(mod, options) {
 		const router = Express.Router(options)
 		Object.setPrototypeOf(router, UI.Router.prototype)
-		router.dispatch = dispatch
+		router.mod = mod
 		return router
 	}
 })
@@ -69,7 +69,7 @@ UI.Router.prototype = Object.assign({}, Express.Router, {
 	async open(path = '/') {
 		if(!path.startsWith('/')) path = '/' + path
 
-		this.dispatch.toClient('S_OPEN_AWESOMIUM_WEB_URL', 1, {url: await getServer(this) + path})
+		this.mod.toClient('S_OPEN_AWESOMIUM_WEB_URL', 1, {url: await getServer(this) + path})
 	}
 })
 

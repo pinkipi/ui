@@ -1,5 +1,7 @@
 {
-	"name": "Awesomium UI",
+	"name": "ui",
+	"update": "github:tera-mods/ui",
+	"title": "Awesomium UI",
 	"author": "Pinkie Pie",
-	"namespace": "ui"
+	"description": "Ingame Awesomeium UI library."
 }
