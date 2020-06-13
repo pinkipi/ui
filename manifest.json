@@ -319,5 +319,7 @@
 		"node_modules/vary/README.md": "A0RPkW3bmhxpLDKfiLg7GiHQFtzkZlYJHyHpAxCd1lw=",
 		"package.json": "X/k8/Iuma6vx51M6RknPxAUoyRAkkOtbtEPIVxvbxHA=",
 		"README.md": "kJJeICSCeC2PHnqZy7NbP0SZo39FR5HpnqGSbWyNttY="
-	}
+	},
+	"publicKey": "MCowBQYDK2VwAyEAY31fpV8rIvZ3zGJE6nqoLXcI27/C3xmjDWV7PDavK4w=",
+	"signature": "EoysLa0U+bQ0sik2FcYyTNxNt7q5oLsT/uVWO0sBxDKK7qZdb2tEdvyOfxAxOUx46YWpLK7j3J7LehvO1FN/Bw=="
 }
